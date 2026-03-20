@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
 from database import init_db, add_quote, get_all_quotes, delete_quote
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -27,7 +30,12 @@ TEMP_QUOTES = [
     "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
     "Programming isn't about what you know; it's about what you can figure out.",
     "The only way to learn a new programming language is by writing programs in it.",
-    "Sometimes it's better to leave something alone, than to remake it."
+    "Sometimes it's better to leave something alone, than to remake it.",
+    "The only way to do great work is to love what you do.",
+    "Friendship is born at that moment when one person says to another: 'What! You too? I thought I was the only one.'",
+    "Love is not about possession. Love is about appreciation.",
+    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+    "True friendship comes when the silence between two people is comfortable."
 ]
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -56,7 +64,9 @@ def startup():
 def generate_quote():
     try:
         if model:
-            prompt = "Generate a short motivational quote for software developers"
+            categories = ["software development", "motivation", "love", "friendship"]
+            category = random.choice(categories)
+            prompt = f"Generate a short insightful quote about {category}."
             response = model.generate_content(prompt)
             quote_text = response.text.strip()
         else:

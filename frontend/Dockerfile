@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . .
 
-ENV REACT_APP_API_URL=http://backend:8000
+ENV REACT_APP_API_URL=http://localhost:8000
 
 EXPOSE 3000
 
